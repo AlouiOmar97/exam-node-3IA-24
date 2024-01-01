@@ -1,0 +1,47 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+  <h1>{{title}}</h1>
+  <div>
+  <a href="/commandes">Liste des commandes</a><br>
+  <label for="id_c">Id Commande</label>
+  <input type="text" id="id_c">
+  <button onclick="livrer()" >Livraison</button>
+  <script src="/socket.io/socket.io.js"></script>
+<script>
+    var name= prompt("Entrez votre nom !")
+    var socket = io();
+    socket.on("msg",(data)=>{
+        var p= document.createElement('p')
+        p.innerHTML=data
+        document.body.append(p)
+    })
+
+function livrer(){
+  var id= document.getElementById("id_c").value
+  data={id: id,nom: name}
+    socket.emit("livrer", data)
+}
+
+function isTyping(){
+  var data = name + " is typing..."
+  console.log(data)
+  socket.emit("uTyping",data)
+
+}
+
+socket.on("msg-typing",(data)=>{
+        var p= document.createElement('p')
+        p.innerHTML=data
+        document.body.append(p)
+        setTimeout(()=>{
+          p.style.display= "none"
+        },2000)
+    })
+
+
+
+</script>
+ 
+  </div>
+{% endblock %}

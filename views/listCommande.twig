@@ -1,0 +1,37 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+  <h1>{{title}}</h1>
+  <hr>
+  <a href="/commandes/create">Ajouter une commande</a><br>
+  <a href="/commandes/tunis">Afficher les commandes à Tunis</a>
+  <table border="2px">
+  <tr>
+  <th>Id</th>
+  <th>Produit</th>
+  <th>Prix</th>
+  <th>Adresse</th>
+  <th>État livraison</th>
+  <th>Nom livreur</th>
+  <th>Actions</th>
+  </tr>
+  {% for commande in commandes %}
+  <tr>
+  <td>{{ commande.id }}</td>
+  <td>{{ commande.produit }}</td>
+  <td>{{ commande.prix }}</td>
+  <td>{{ commande.adresse }}</td>
+  <td>{{ commande.etat_livraison }}</td>
+  <td>{{ commande.nom_livreur }}</td>
+  <td><a href="/commandes/update/{{commande.id}}">Modifier</a>  <a href="/commandes/delete/{{commande.id}}">Supprimer</a></td>
+  </tr>
+    <hr>
+  {% else %}
+  <tr>
+  <td colspan="7" align="center">Pas de commandes</td>
+  </tr>
+  {% endfor %}
+  </table>
+  </div>
+  <a href="/commandes/livraison">Vers livraison</a>
+{% endblock %}
